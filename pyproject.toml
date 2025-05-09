@@ -5,19 +5,18 @@ requires = [ "setuptools" ]
 [project]
 name = "axis-batch"
 version = "0.0.0"
-description = "Divide an array into batches along specific axes in NumPy / PyTorch / TensorFlow / JAX"
+description = "Divide an array into batches along specific axes in NumPy / PyTorch / JAX"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
   { name = "34j", email = "34j.95a2p@simplelogin.com" },
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Developers",
   "Natural Language :: English",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -26,6 +25,7 @@ classifiers = [
 ]
 
 dependencies = [
+    "array-api-compat>=1.11.2",
 ]
 urls."Bug Tracker" = "https://github.com/34j/axis-batch/issues"
 urls.Changelog = "https://github.com/34j/axis-batch/blob/main/CHANGELOG.md"
@@ -36,6 +36,7 @@ urls.repository = "https://github.com/34j/axis-batch"
 dev = [
   "pytest>=8,<9",
   "pytest-cov>=6,<7",
+  "numpy>=2.0.2",
 ]
 docs = [
   "furo>=2023.5.20; python_version>='3.11'",

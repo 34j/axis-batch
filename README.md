@@ -38,13 +38,39 @@
 
 ---
 
-Divide an array into batches along specific axes in NumPy / PyTorch / TensorFlow / JAX
+Divide an array into batches along specific axes in NumPy / PyTorch / JAX
 
 ## Installation
 
 Install this via pip (or your favourite package manager):
 
-`pip install axis-batch`
+```shell
+pip install axis-batch
+```
+
+## Usage
+
+```python
+import numpy as np
+
+from axis_batch import AxisBatch
+
+a = np.arange(12).reshape(3, 4)
+b = AxisBatch(a, axis=0, size=2)
+for i, x in enumerate(b):
+    print(f"{i}: {x}")
+    b.send(x + 1)
+print(b.value)
+```
+
+```text
+0: [[0 1 2 3]
+ [4 5 6 7]]
+1: [[ 8  9 10 11]]
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+```
 
 ## Contributors ✨
 
