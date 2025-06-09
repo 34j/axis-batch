@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.1 (2025-06-09)
+
+### Bug fixes
+
+- Fix wrong __len__ (#39) ([`8ad9c45`](https://github.com/34j/axis-batch/commit/8ad9c457d0ee1e9d53404baad71acdc8e08e989a))
+
 ## v0.1.0 (2025-05-09)
 
 ### Bug fixes
