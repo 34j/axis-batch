@@ -75,7 +75,9 @@ class AxisBatch(Generic[TArray]):
             The number of batches.
 
         """
-        return len(self._a) // self._size
+        # https://stackoverflow.com/questions/14822184/is-there-a-ceiling-equivalent-of-operator-in-python
+        # return len(self._a) // self._size
+        return -(len(self._a) // -self._size)
 
     def send(self, result: TArray, /) -> None:
         """
