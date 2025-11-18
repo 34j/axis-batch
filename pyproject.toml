@@ -35,7 +35,7 @@ urls.repository = "https://github.com/34j/axis-batch"
 [dependency-groups]
 dev = [
   "pytest>=8,<9",
-  "pytest-cov>=6,<7",
+  "pytest-cov>=7,<8",
   "numpy>=2.2.0",
 ]
 docs = [
