@@ -1,12 +1,9 @@
 from collections.abc import Iterator, Sequence
-from typing import Generic, TypeVar
 
 from array_api_compat import array_namespace
 
-TArray = TypeVar("TArray")
 
-
-class AxisBatch(Generic[TArray]):
+class AxisBatch[TArray]:
     """Batch the array along the given axis."""
 
     def __init__(self, a: TArray, /, *, axis: int | Sequence[int], size: int) -> None:
@@ -22,15 +19,15 @@ class AxisBatch(Generic[TArray]):
         size : int
             The size of the batch.
 
-        Yields
-        ------
-        TArray
-            The batched arrays.
-
         Returns
         -------
         Callable[[Sequence[TArray]], TArray]
             The function that concats the batched arrays.
+
+        Yields
+        ------
+        TArray
+            The batched arrays.
 
         Usage
         -----
@@ -48,7 +45,7 @@ class AxisBatch(Generic[TArray]):
         self._axis_len = len(axis)
         xp = array_namespace(a)
         a = xp.moveaxis(a, axis, tuple(range(self._axis_len)))
-        self._shape = a.shape  # type: ignore
+        self._shape = a.shape
         self._a = xp.reshape(a, (-1, *self._shape[self._axis_len :]))
         self._results: list[TArray] = []
 
