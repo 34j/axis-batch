@@ -9,7 +9,14 @@ from axis_batch import AxisBatch
 def test_main(axis: int) -> None:
     rng = np.random.default_rng(0)
     a = rng.uniform(0, 1, (10, 11, 12))
-    b = AxisBatch(a, axis=0, size=3)
+    b = AxisBatch(a, axis=axis, size=3)
     for x in b:
         b.send(x * 2)
     assert_allclose(b.value, a * 2)
+
+
+def test_len() -> None:
+    """Return the number of batches, including a partial final batch."""
+    a = np.zeros(10)
+    assert len(AxisBatch(a, axis=0, size=3)) == 4
+    assert len(AxisBatch(a, axis=0, size=5)) == 2

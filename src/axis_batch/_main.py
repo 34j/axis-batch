@@ -19,16 +19,6 @@ class AxisBatch[TArray]:
         size : int
             The size of the batch.
 
-        Returns
-        -------
-        Callable[[Sequence[TArray]], TArray]
-            The function that concats the batched arrays.
-
-        Yields
-        ------
-        TArray
-            The batched arrays.
-
         Usage
         -----
         >>> a = ivy.arange(10)
@@ -72,9 +62,8 @@ class AxisBatch[TArray]:
             The number of batches.
 
         """
-        # https://stackoverflow.com/questions/14822184/is-there-a-ceiling-equivalent-of-operator-in-python
-        # return len(self._a) // self._size
-        return -(len(self._a) // -self._size)
+        quotient, remainder = divmod(len(self._a), self._size)
+        return quotient + (remainder != 0)
 
     def send(self, result: TArray, /) -> None:
         """
