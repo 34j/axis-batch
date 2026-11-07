@@ -1,12 +1,9 @@
 from collections.abc import Iterator, Sequence
-from typing import Generic, TypeVar
 
 from array_api_compat import array_namespace
 
-TArray = TypeVar("TArray")
 
-
-class AxisBatch(Generic[TArray]):
+class AxisBatch[TArray]:
     """Batch the array along the given axis."""
 
     def __init__(self, a: TArray, /, *, axis: int | Sequence[int], size: int) -> None:
@@ -21,16 +18,6 @@ class AxisBatch(Generic[TArray]):
             The axis to batch.
         size : int
             The size of the batch.
-
-        Yields
-        ------
-        TArray
-            The batched arrays.
-
-        Returns
-        -------
-        Callable[[Sequence[TArray]], TArray]
-            The function that concats the batched arrays.
 
         Usage
         -----
@@ -48,7 +35,7 @@ class AxisBatch(Generic[TArray]):
         self._axis_len = len(axis)
         xp = array_namespace(a)
         a = xp.moveaxis(a, axis, tuple(range(self._axis_len)))
-        self._shape = a.shape  # type: ignore
+        self._shape = a.shape
         self._a = xp.reshape(a, (-1, *self._shape[self._axis_len :]))
         self._results: list[TArray] = []
 
@@ -75,9 +62,8 @@ class AxisBatch(Generic[TArray]):
             The number of batches.
 
         """
-        # https://stackoverflow.com/questions/14822184/is-there-a-ceiling-equivalent-of-operator-in-python
-        # return len(self._a) // self._size
-        return -(len(self._a) // -self._size)
+        quotient, remainder = divmod(len(self._a), self._size)
+        return quotient + (remainder != 0)
 
     def send(self, result: TArray, /) -> None:
         """
