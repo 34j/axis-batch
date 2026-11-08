@@ -35,7 +35,7 @@ urls.repository = "https://github.com/34j/axis-batch"
 dev = [
   "coverage",
   "numpy>=2.2",
-  "packaging-34j[test]",
+  "packaging-34j[test]>=1.1.7",
   "ty",
 ]
 docs = [
@@ -50,49 +50,3 @@ max_supported_python = "3.14"
 
 [tool.ty]
 terminal.error-on-warning = true
-
-[tool.pytest]
-ini_options.pythonpath = [ "src" ]
-ini_options.addopts = """\
-    -v
-    -Wdefault
-    --cov=axis_batch
-    --cov-report=term
-    --cov-report=xml
-    """
-
-[tool.coverage]
-run.branch = true
-report.exclude_lines = [
-  "@overload",
-  'if __name__ == "__main__":',
-  "if TYPE_CHECKING",
-  "pragma: no cover",
-  "raise NotImplementedError",
-]
-
-[tool.semantic_release]
-version_variables = [
-  "src/axis_batch/__init__.py:__version__",
-]
-version_toml = [ "pyproject.toml:project.version" ]
-build_command = """
-pip install uv
-uv lock
-git add uv.lock
-uv build
-"""
-branches.main.match = "main"
-branches.noop.match = "(?!main$)"
-branches.noop.prerelease = true
-changelog.environment.keep_trailing_newline = true
-changelog.exclude_commit_patterns = [
-  "chore(?:\\([^)]*?\\))?: .+",
-  "ci(?:\\([^)]*?\\))?: .+",
-  "refactor(?:\\([^)]*?\\))?: .+",
-  "style(?:\\([^)]*?\\))?: .+",
-  "test(?:\\([^)]*?\\))?: .+",
-  "build\\((?!deps\\): .+)",
-  "Merged? .*",
-  "Initial [Cc]ommit.*",         # codespell:ignore
-]

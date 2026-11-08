@@ -21,11 +21,20 @@ class AxisBatch[TArray]:
 
         Usage
         -----
-        >>> a = ivy.arange(10)
-        >>> b = AxisBatch(a, axis=0, size=3)
+        >>> from array_api_compat import numpy as np
+        >>> a = np.stack((np.arange(5), np.arange(5)), axis=0)
+        >>> b = AxisBatch(a, axis=1, size=3)
         >>> for x in b:
-        >>>     b.send(x * 2)
+        ...     print(x)
+        ...     b.send(x * 2)
+        [[0 0]
+         [1 1]
+         [2 2]]
+        [[3 3]
+         [4 4]]
         >>> print(b.value)
+        [[0 2 4 6 8]
+         [0 2 4 6 8]]
 
         """
         if isinstance(axis, int):
